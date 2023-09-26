@@ -1,0 +1,41 @@
+{
+    "users": [
+        {
+            "id": "1",
+            "name": "Angelia Fischer"
+        },
+        {
+            "id": "2",
+            "name": "Waller Harding"
+        },
+        {
+            "id": "3",
+            "name": "Gardner Clay"
+        },
+        {
+            "id": "4",
+            "name": "Acosta Farley"
+        },
+        {
+            "id": "5",
+            "name": "Austin Guthrie"
+        }
+    ],
+    "transactions": [
+        {
+            "sourceId": "1",
+            "targetId": "2",
+            "amount": 5
+        },
+        {
+            "sourceId": "1",
+            "targetId": "2",
+            "amount": 3
+        },
+        {
+            "sourceId": "2",
+            "targetId": "3",
+            "amount": 2
+        }
+    ]
+}
