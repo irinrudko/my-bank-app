@@ -6,12 +6,12 @@ type UserSelectionType = {
     setSelectedUser: React.Dispatch<React.SetStateAction<User | null>>
 }
 
-const UserSelection: React.FC<UserSelectionType> = ({ users, setSelectedUser: setUser }) => {
+export const UserSelection: React.FC<UserSelectionType> = ({ users, setSelectedUser: setUser }) => {
     const [selectedUser] = useState<User | null>(null)
 
     const handleUserChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const userId = event.target.value
-        const user = users.find((u) => u.id === userId)
+        const user = users.find((user) => user.id === userId)
         setUser(user || null)
     }
 
@@ -34,5 +34,3 @@ const UserSelection: React.FC<UserSelectionType> = ({ users, setSelectedUser: se
         </div>
     )
 }
-
-export default UserSelection
