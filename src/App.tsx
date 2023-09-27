@@ -14,8 +14,6 @@ const App: React.FC = () => {
         async function loadData() {
             try {
                 const data = await fetchUsersAndTransactions()
-                console.log('fetchUsersAndTransactions DATA', data)
-
                 setUsers(data.users)
                 setTransactions(data.transactions)
             } catch (error) {}
@@ -23,10 +21,6 @@ const App: React.FC = () => {
 
         loadData()
     }, [])
-
-    useEffect(() => {
-        console.log('Selected User:', selectedUser)
-    }, [selectedUser])
 
     return (
         <div className="App">
