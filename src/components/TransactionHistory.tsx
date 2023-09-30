@@ -1,12 +1,11 @@
-import React from 'react'
 import { Transaction, User } from '../types/types'
 
-type TransactionHistoryProps = {
+type TransactionHistoryType = {
     transactions: Transaction[]
     selectedUser: User | null
 }
 
-export const TransactionHistory: React.FC<TransactionHistoryProps> = ({ transactions, selectedUser }) => {
+export const TransactionHistory: React.FC<TransactionHistoryType> = ({ transactions, selectedUser }) => {
     const incomingTransactions = selectedUser
         ? transactions.filter((transaction) => transaction.targetId === selectedUser.id)
         : []
