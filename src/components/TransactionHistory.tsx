@@ -1,5 +1,6 @@
-import { Transaction, User } from '../types/types'
 import { useState } from 'react'
+import { Transaction, User } from '../types/types'
+import styles from './TransactionHistory.module.scss'
 
 type TransactionHistoryType = {
     transactions: Transaction[]
@@ -54,7 +55,7 @@ export const TransactionHistory: React.FC<TransactionHistoryType> = ({ transacti
     return (
         <div>
             <h2>Account Overview</h2>
-            <table>
+            <table className={styles.table}>
                 <caption>{selectedUser?.name}</caption>
                 <thead>
                     <tr>
@@ -65,13 +66,13 @@ export const TransactionHistory: React.FC<TransactionHistoryType> = ({ transacti
                 </thead>
                 <tbody>
                     <tr>
-                        <td>{userBalance.toFixed(2)}</td>
+                        <td className={styles.balance}>{userBalance.toFixed(2)}</td>
                         <td>
                             <table>
                                 <thead>
                                     <tr>
                                         <th scope="col">Source ID</th>
-                                        <th scope="col" onClick={toggleIncomingSort} style={{ cursor: 'pointer' }}>
+                                        <th scope="col" onClick={toggleIncomingSort} className={styles.sortableHeader}>
                                             Amount {incomingSortOrder === 'asc' ? '▲' : '▼'}
                                         </th>
                                     </tr>
@@ -91,7 +92,7 @@ export const TransactionHistory: React.FC<TransactionHistoryType> = ({ transacti
                                 <thead>
                                     <tr>
                                         <th scope="col">Target ID</th>
-                                        <th scope="col" onClick={toggleOutgoingSort} style={{ cursor: 'pointer' }}>
+                                        <th scope="col" onClick={toggleOutgoingSort} className={styles.sortableHeader}>
                                             Amount {outgoingSortOrder === 'asc' ? '▲' : '▼'}
                                         </th>
                                     </tr>

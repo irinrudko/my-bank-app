@@ -1,0 +1,34 @@
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+
+    th {
+        background-color: #333;
+        color: #fff;
+        padding: 10px;
+        text-align: left;
+    }
+
+    td {
+        padding: 10px;
+        border-bottom: 1px solid #ccc;
+    }
+
+    .sortableHeader {
+        cursor: pointer;
+    }
+
+    .sortIcon {
+        margin-left: 5px;
+        font-size: 12px;
+    }
+
+    .balance {
+        text-align: center;
+        vertical-align: middle;
+    }
+}
