@@ -1,5 +1,5 @@
 import { useState } from 'react'
-import { Transaction, User } from '../types/types'
+import { Transaction, User } from '../../types/types'
 import styles from './TransactionHistory.module.scss'
 
 type TransactionHistoryType = {

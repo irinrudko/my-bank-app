@@ -1,3 +1,5 @@
+@use '../../styles/colors.scss' as colors;
+
 .table {
     width: 100%;
     border-collapse: collapse;
@@ -7,7 +9,7 @@
     padding: 0;
 
     th {
-        background-color: #333;
+        background-color: colors.$primary-color;
         color: #fff;
         padding: 10px;
         text-align: left;
