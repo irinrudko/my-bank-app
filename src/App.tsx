@@ -1,4 +1,4 @@
-import { UserAccount } from './components/userAccount'
+import { UserAccount } from './components/UserAccount'
 
 const App: React.FC = () => {
     return <UserAccount />
