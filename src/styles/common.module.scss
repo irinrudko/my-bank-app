@@ -20,4 +20,13 @@
         padding: 10px;
         border-bottom: 1px solid #ccc;
     }
+
+    .sortableHeader {
+        cursor: pointer;
+    }
+
+    .sortIcon {
+        margin-left: 5px;
+        font-size: 12px;
+    }
 }
