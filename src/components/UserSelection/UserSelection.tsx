@@ -1,5 +1,6 @@
 import { useState } from 'react'
-import { User } from '../types/types'
+import { User } from '../../types/types'
+import styles from './UserSelection.module.scss'
 
 type UserSelectionType = {
     users: User[]
@@ -16,12 +17,12 @@ export const UserSelection: React.FC<UserSelectionType> = ({ users, setSelectedU
     }
 
     return (
-        <div>
+        <div className={styles.container}>
             <label>View this page as:</label>
             <select onChange={handleUserChange}>
                 <option value="">-- Select User --</option>
                 {users.map((user) => (
-                    <option key={user.id} value={user.id}>
+                    <option key={user.id} value={user.id} className={styles.option}>
                         {user.name}
                     </option>
                 ))}

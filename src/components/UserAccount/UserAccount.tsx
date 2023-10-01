@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react'
-import { fetchUsersAndTransactions } from '../data/api'
-import { User, Transaction } from '../types/types'
-import { BalanceDisplay } from './BalanceDisplay'
-import { UserSelection } from './UserSelection'
-import { UserTransactions } from './UserTransactions/UserTransactions'
+import { fetchUsersAndTransactions } from '../../data/api'
+import { User, Transaction } from '../../types/types'
+import { BalanceDisplay } from '../BalanceDisplay'
+import { UserSelection } from '../UserSelection/UserSelection'
+import { UserTransactions } from '../UserTransactions/UserTransactions'
 
 export const UserAccount = () => {
     const [users, setUsers] = useState<User[]>([])
