@@ -1,6 +1,7 @@
 import { Transaction, User } from '../types/types'
 
-const JSON_FILE_PATH = '/data/bankData.json'
+// const JSON_FILE_PATH = '/data/bankData.json'
+const JSON_FILE_PATH = '/data/testData.json'
 
 export async function fetchUsersAndTransactions(): Promise<{ users: User[]; transactions: Transaction[] }> {
     try {

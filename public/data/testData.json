@@ -34,6 +34,16 @@
         },
         {
             "sourceId": "2",
+            "targetId": "1",
+            "amount": 11
+        },
+        {
+            "sourceId": "3",
+            "targetId": "1",
+            "amount": 1
+        },
+        {
+            "sourceId": "2",
             "targetId": "3",
             "amount": 2
         }
