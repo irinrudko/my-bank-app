@@ -29,14 +29,6 @@ export const TransactionHistory: React.FC<TransactionHistoryType> = ({ transacti
         ? transactions.filter((transaction) => transaction.sourceId === selectedUser.id)
         : []
 
-    const calculateUserBalance = () => {
-        const incomingTotal = incomingTransactions.reduce((total, transaction) => total + transaction.amount, 0)
-        const outgoingTotal = outgoingTransactions.reduce((total, transaction) => total + transaction.amount, 0)
-        return incomingTotal - outgoingTotal
-    }
-
-    const userBalance = selectedUser ? calculateUserBalance() : 0
-
     const sortedIncomingTransactions = [...incomingTransactions]
     const sortedOutgoingTransactions = [...outgoingTransactions]
 
@@ -59,14 +51,12 @@ export const TransactionHistory: React.FC<TransactionHistoryType> = ({ transacti
                 <caption>{selectedUser?.name}</caption>
                 <thead>
                     <tr>
-                        <th scope="col">Balance</th>
                         <th scope="col">Incoming Transactions</th>
                         <th scope="col">Outgoing Transactions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
-                        <td className={styles.balance}>{userBalance.toFixed(2)}</td>
                         <td>
                             <table>
                                 <thead>
