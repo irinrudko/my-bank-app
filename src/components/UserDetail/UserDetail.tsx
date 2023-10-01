@@ -7,15 +7,18 @@ import { UserTransactions } from '../UserTransactions/UserTransactions'
 type UserDetailProps = {
     users: User[]
     transactions: Transaction[]
+    onUserIdChange: (userId: string) => void // send userId to parent
 }
 
-const UserDetail: React.FC<UserDetailProps> = ({ users, transactions }) => {
+const UserDetail: React.FC<UserDetailProps> = ({ users, transactions, onUserIdChange }) => {
     const { userId } = useParams<{ userId: string }>()
     const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
     useEffect(() => {
         const user = users.find((user) => user.id === userId)
         setSelectedUser(user || null)
+
+        onUserIdChange(userId!)
     }, [userId, users])
 
     return (

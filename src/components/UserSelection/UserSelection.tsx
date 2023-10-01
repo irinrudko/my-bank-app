@@ -1,21 +1,26 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
 import { User } from '../../types/types'
 import { useNavigate } from 'react-router-dom'
 import styles from './UserSelection.module.scss'
 
 type UserSelectionType = {
     users: User[]
+    id: string
 }
 
-export const UserSelection: React.FC<UserSelectionType> = ({ users }) => {
+export const UserSelection: React.FC<UserSelectionType> = ({ users, id }) => {
     const navigate = useNavigate()
-    const [selectedUserId, setSelectedUserId] = useState<string>('')
+    const [selectedUserId, setSelectedUserId] = useState<string>(id)
 
     const handleUserChange = (event: React.ChangeEvent<HTMLSelectElement>) => {
         const userId = event.target.value
         setSelectedUserId(userId)
         navigate(`/user/${userId}`)
     }
+
+    useEffect(() => {
+        setSelectedUserId(id)
+    }, [id])
 
     return (
         <div className={styles.container}>

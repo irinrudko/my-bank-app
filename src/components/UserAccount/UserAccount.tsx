@@ -8,6 +8,7 @@ import UserDetail from '../UserDetail/UserDetail'
 export const UserAccount = () => {
     const [users, setUsers] = useState<User[]>([])
     const [transactions, setTransactions] = useState<Transaction[]>([])
+    const [selectedUserId, setSelectedUserId] = useState<string>('')
 
     useEffect(() => {
         async function loadData() {
@@ -21,13 +22,20 @@ export const UserAccount = () => {
         loadData()
     }, [])
 
+    const setUserId = (userId: string) => {
+        setSelectedUserId(userId)
+    }
+
     return (
         <div>
             <h1>Bank Transaction History</h1>
-            <UserSelection users={users} />
+            <UserSelection users={users} id={selectedUserId} />
 
             <Routes>
-                <Route path="/user/:userId" element={<UserDetail users={users} transactions={transactions} />} />
+                <Route
+                    path="/user/:userId"
+                    element={<UserDetail users={users} transactions={transactions} onUserIdChange={setUserId} />}
+                />
             </Routes>
         </div>
     )
