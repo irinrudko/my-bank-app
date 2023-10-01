@@ -1,6 +1,8 @@
 import { useState } from 'react'
 import { Transaction, User } from '../../types/types'
 import { TransactionsTable } from './TransactionsTable/TransactionsTable'
+import { useSearch } from '../../hooks/useSearch'
+import { Search } from '../Search/Search'
 import styles from './TransactionsHistory.module.scss'
 
 type TransactionHistoryType = {
@@ -15,6 +17,8 @@ export const TransactionsHistory: React.FC<TransactionHistoryType> = ({ transact
     const [incomingSortOrder, setIncomingSortOrder] = useState<SortOrderType>('asc')
     const [outgoingSortOrder, setOutgoingSortOrder] = useState<SortOrderType>('asc')
 
+    const { search, handleSearch, filteredTransactions } = useSearch(transactions)
+
     const toggleSortOrder = (column: TransactionsType) => {
         switch (column) {
             case 'incoming':
@@ -28,19 +32,12 @@ export const TransactionsHistory: React.FC<TransactionHistoryType> = ({ transact
         }
     }
 
-    const filterTransactions = () => {
-        if (!selectedUser) return []
-
-        return transactions.filter(
-            (transaction) => transaction.sourceId === selectedUser.id || transaction.targetId === selectedUser.id
-        )
-    }
-
-    const userTransactions = filterTransactions()
-
     return (
         <div>
             <h2>Account Overview</h2>
+
+            <Search value={search} onChange={handleSearch} />
+
             <table className={styles.table}>
                 <caption>{selectedUser?.name}</caption>
                 <thead>
@@ -53,7 +50,7 @@ export const TransactionsHistory: React.FC<TransactionHistoryType> = ({ transact
                     <tr>
                         <td>
                             <TransactionsTable
-                                transactions={userTransactions.filter(
+                                transactions={filteredTransactions.filter(
                                     (transaction) => transaction.targetId === selectedUser?.id
                                 )}
                                 sortOrder={incomingSortOrder}
@@ -63,7 +60,7 @@ export const TransactionsHistory: React.FC<TransactionHistoryType> = ({ transact
                         </td>
                         <td>
                             <TransactionsTable
-                                transactions={userTransactions.filter(
+                                transactions={filteredTransactions.filter(
                                     (transaction) => transaction.sourceId === selectedUser?.id
                                 )}
                                 sortOrder={outgoingSortOrder}
