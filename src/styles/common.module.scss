@@ -9,6 +9,10 @@
     padding: 0;
     border: none;
 
+    tbody {
+        vertical-align: top;
+    }
+
     th {
         background-color: colors.$primary-color;
         color: #fff;
