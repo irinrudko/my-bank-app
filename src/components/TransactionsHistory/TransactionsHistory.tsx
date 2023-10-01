@@ -1,5 +1,6 @@
 import { useState } from 'react'
 import { Transaction, User } from '../../types/types'
+import { TransactionsTable } from './TransactionsTable/TransactionsTable'
 import styles from './TransactionsHistory.module.scss'
 
 type TransactionHistoryType = {
@@ -8,14 +9,14 @@ type TransactionHistoryType = {
 }
 
 type SortOrderType = 'asc' | 'desc'
-type TransactionType = 'incoming' | 'outgoing'
+type TransactionsType = 'incoming' | 'outgoing'
 
 export const TransactionsHistory: React.FC<TransactionHistoryType> = ({ transactions, selectedUser }) => {
     const [incomingSortOrder, setIncomingSortOrder] = useState<SortOrderType>('asc')
     const [outgoingSortOrder, setOutgoingSortOrder] = useState<SortOrderType>('asc')
 
-    const toggleSortOrder = (type: TransactionType) => {
-        switch (type) {
+    const toggleSortOrder = (column: TransactionsType) => {
+        switch (column) {
             case 'incoming':
                 setIncomingSortOrder(incomingSortOrder === 'asc' ? 'desc' : 'asc')
                 break
@@ -36,16 +37,6 @@ export const TransactionsHistory: React.FC<TransactionHistoryType> = ({ transact
     }
 
     const userTransactions = filterTransactions()
-    const incomingTransactions = userTransactions.filter((transaction) => transaction.targetId === selectedUser?.id)
-    const outgoingTransactions = userTransactions.filter((transaction) => transaction.sourceId === selectedUser?.id)
-
-    const sortTransactions = (transactions: Transaction[], sortOrder: SortOrderType) => {
-        const sortedTransactions = [...transactions]
-        return sortedTransactions.sort((a, b) => (sortOrder === 'asc' ? a.amount - b.amount : b.amount - a.amount))
-    }
-
-    const sortedIncomingTransactions = sortTransactions(incomingTransactions, incomingSortOrder)
-    const sortedOutgoingTransactions = sortTransactions(outgoingTransactions, outgoingSortOrder)
 
     return (
         <div>
@@ -61,50 +52,24 @@ export const TransactionsHistory: React.FC<TransactionHistoryType> = ({ transact
                 <tbody>
                     <tr>
                         <td>
-                            <table className={styles.table}>
-                                <thead>
-                                    <tr>
-                                        <th>Source ID</th>
-                                        <th
-                                            onClick={() => toggleSortOrder('incoming')}
-                                            className={`${styles.sortableHeader} ${styles.sortIcon}`}
-                                        >
-                                            Amount {incomingSortOrder === 'asc' ? '▲' : '▼'}
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedIncomingTransactions.map((transaction, index) => (
-                                        <tr key={index}>
-                                            <td>{transaction.sourceId}</td>
-                                            <td>{transaction.amount.toFixed(2)}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                            <TransactionsTable
+                                transactions={userTransactions.filter(
+                                    (transaction) => transaction.targetId === selectedUser?.id
+                                )}
+                                sortOrder={incomingSortOrder}
+                                onSortOrderChange={() => toggleSortOrder('incoming')}
+                                type="incoming"
+                            />
                         </td>
                         <td>
-                            <table className={styles.table}>
-                                <thead>
-                                    <tr>
-                                        <th>Target ID</th>
-                                        <th
-                                            onClick={() => toggleSortOrder('outgoing')}
-                                            className={`${styles.sortableHeader} ${styles.sortIcon}`}
-                                        >
-                                            Amount {outgoingSortOrder === 'asc' ? '▲' : '▼'}
-                                        </th>
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {sortedOutgoingTransactions.map((transaction, index) => (
-                                        <tr key={index}>
-                                            <td>{transaction.targetId}</td>
-                                            <td>{transaction.amount.toFixed(2)}</td>
-                                        </tr>
-                                    ))}
-                                </tbody>
-                            </table>
+                            <TransactionsTable
+                                transactions={userTransactions.filter(
+                                    (transaction) => transaction.sourceId === selectedUser?.id
+                                )}
+                                sortOrder={outgoingSortOrder}
+                                onSortOrderChange={() => toggleSortOrder('outgoing')}
+                                type="outgoing"
+                            />
                         </td>
                     </tr>
                 </tbody>
