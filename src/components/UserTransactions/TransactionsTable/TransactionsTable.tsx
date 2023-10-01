@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { Transaction, User } from '../../../types/types'
 import { TransactionTable } from './TransactionTable/TransactionTable'
-import styles from './TransactionsTable.module.scss'
+import common from '../../../styles/common.module.scss'
 
 type TransactionsTableType = {
     transactions: Transaction[]
@@ -28,7 +28,7 @@ export const TransactionsTable: React.FC<TransactionsTableType> = ({ transaction
         }
     }
     return (
-        <table className={styles.table}>
+        <table className={common.table}>
             <caption>{selectedUser?.name}</caption>
             <thead>
                 <tr>

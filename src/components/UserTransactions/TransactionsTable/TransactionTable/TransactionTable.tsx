@@ -1,5 +1,5 @@
 import { Transaction } from '../../../../types/types'
-import styles from './TransactionTable.module.scss'
+import common from '../../../../styles/common.module.scss'
 
 type SortOrderType = 'asc' | 'desc'
 
@@ -21,11 +21,11 @@ export const TransactionTable: React.FC<TransactionTableType> = ({
     )
 
     return (
-        <table className={styles.table}>
+        <table className={common.table}>
             <thead>
                 <tr>
                     <th>{type === 'incoming' ? 'Source ID' : 'Target ID'}</th>
-                    <th onClick={onSortOrderChange} className={`${styles.sortableHeader} ${styles.sortIcon}`}>
+                    <th onClick={onSortOrderChange} className={`${common.sortableHeader} ${common.sortIcon}`}>
                         Amount {sortOrder === 'asc' ? '▲' : '▼'}
                     </th>
                 </tr>
