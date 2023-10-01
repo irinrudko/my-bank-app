@@ -8,41 +8,44 @@ type TransactionHistoryType = {
 }
 
 type SortOrderType = 'asc' | 'desc'
+type TransactionType = 'incoming' | 'outgoing'
 
 export const TransactionHistory: React.FC<TransactionHistoryType> = ({ transactions, selectedUser }) => {
     const [incomingSortOrder, setIncomingSortOrder] = useState<SortOrderType>('asc')
     const [outgoingSortOrder, setOutgoingSortOrder] = useState<SortOrderType>('asc')
 
-    const toggleIncomingSort = () => {
-        setIncomingSortOrder(incomingSortOrder === 'asc' ? 'desc' : 'asc')
+    const toggleSortOrder = (type: TransactionType) => {
+        switch (type) {
+            case 'incoming':
+                setIncomingSortOrder(incomingSortOrder === 'asc' ? 'desc' : 'asc')
+                break
+            case 'outgoing':
+                setOutgoingSortOrder(outgoingSortOrder === 'asc' ? 'desc' : 'asc')
+                break
+            default:
+                break
+        }
     }
 
-    const toggleOutgoingSort = () => {
-        setOutgoingSortOrder(outgoingSortOrder === 'asc' ? 'desc' : 'asc')
+    const filterTransactions = () => {
+        if (!selectedUser) return []
+
+        return transactions.filter(
+            (transaction) => transaction.sourceId === selectedUser.id || transaction.targetId === selectedUser.id
+        )
     }
 
-    const incomingTransactions = selectedUser
-        ? transactions.filter((transaction) => transaction.targetId === selectedUser.id)
-        : []
+    const userTransactions = filterTransactions()
+    const incomingTransactions = userTransactions.filter((transaction) => transaction.targetId === selectedUser?.id)
+    const outgoingTransactions = userTransactions.filter((transaction) => transaction.sourceId === selectedUser?.id)
 
-    const outgoingTransactions = selectedUser
-        ? transactions.filter((transaction) => transaction.sourceId === selectedUser.id)
-        : []
-
-    const sortedIncomingTransactions = [...incomingTransactions]
-    const sortedOutgoingTransactions = [...outgoingTransactions]
-
-    if (incomingSortOrder === 'asc') {
-        sortedIncomingTransactions.sort((a, b) => a.amount - b.amount)
-    } else {
-        sortedIncomingTransactions.sort((a, b) => b.amount - a.amount)
+    const sortTransactions = (transactions: Transaction[], sortOrder: SortOrderType) => {
+        const sortedTransactions = [...transactions]
+        return sortedTransactions.sort((a, b) => (sortOrder === 'asc' ? a.amount - b.amount : b.amount - a.amount))
     }
 
-    if (outgoingSortOrder === 'asc') {
-        sortedOutgoingTransactions.sort((a, b) => a.amount - b.amount)
-    } else {
-        sortedOutgoingTransactions.sort((a, b) => b.amount - a.amount)
-    }
+    const sortedIncomingTransactions = sortTransactions(incomingTransactions, incomingSortOrder)
+    const sortedOutgoingTransactions = sortTransactions(outgoingTransactions, outgoingSortOrder)
 
     return (
         <div>
@@ -51,18 +54,21 @@ export const TransactionHistory: React.FC<TransactionHistoryType> = ({ transacti
                 <caption>{selectedUser?.name}</caption>
                 <thead>
                     <tr>
-                        <th scope="col">Incoming Transactions</th>
-                        <th scope="col">Outgoing Transactions</th>
+                        <th>Incoming Transactions</th>
+                        <th>Outgoing Transactions</th>
                     </tr>
                 </thead>
                 <tbody>
                     <tr>
                         <td>
-                            <table>
+                            <table className={styles.table}>
                                 <thead>
                                     <tr>
-                                        <th scope="col">Source ID</th>
-                                        <th scope="col" onClick={toggleIncomingSort} className={styles.sortableHeader}>
+                                        <th>Source ID</th>
+                                        <th
+                                            onClick={() => toggleSortOrder('incoming')}
+                                            className={`${styles.sortableHeader} ${styles.sortIcon}`}
+                                        >
                                             Amount {incomingSortOrder === 'asc' ? '▲' : '▼'}
                                         </th>
                                     </tr>
@@ -78,11 +84,14 @@ export const TransactionHistory: React.FC<TransactionHistoryType> = ({ transacti
                             </table>
                         </td>
                         <td>
-                            <table>
+                            <table className={styles.table}>
                                 <thead>
                                     <tr>
-                                        <th scope="col">Target ID</th>
-                                        <th scope="col" onClick={toggleOutgoingSort} className={styles.sortableHeader}>
+                                        <th>Target ID</th>
+                                        <th
+                                            onClick={() => toggleSortOrder('outgoing')}
+                                            className={`${styles.sortableHeader} ${styles.sortIcon}`}
+                                        >
                                             Amount {outgoingSortOrder === 'asc' ? '▲' : '▼'}
                                         </th>
                                     </tr>
