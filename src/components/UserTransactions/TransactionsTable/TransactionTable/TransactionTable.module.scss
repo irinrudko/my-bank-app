@@ -1,0 +1,19 @@
+@use '../../../../styles/colors.scss' as colors;
+
+.table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 20px;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+
+    .sortableHeader {
+        cursor: pointer;
+    }
+
+    .sortIcon {
+        margin-left: 5px;
+        font-size: 12px;
+    }
+}

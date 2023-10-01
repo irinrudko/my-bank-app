@@ -1,4 +1,4 @@
-@use '../../styles/colors.scss' as colors;
+@use '../../../styles/colors.scss' as colors;
 
 .table {
     width: 100%;
@@ -18,19 +18,5 @@
     td {
         padding: 10px;
         border-bottom: 1px solid #ccc;
-    }
-
-    .sortableHeader {
-        cursor: pointer;
-    }
-
-    .sortIcon {
-        margin-left: 5px;
-        font-size: 12px;
-    }
-
-    .balance {
-        text-align: center;
-        vertical-align: middle;
     }
 }

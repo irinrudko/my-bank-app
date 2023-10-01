@@ -1,5 +1,5 @@
-import { Transaction } from '../../../types/types'
-import styles from '../../TransactionsHistory/TransactionsHistory.module.scss'
+import { Transaction } from '../../../../types/types'
+import styles from './TransactionTable.module.scss'
 
 type SortOrderType = 'asc' | 'desc'
 
@@ -10,7 +10,7 @@ type TransactionTableType = {
     type: string
 }
 
-export const TransactionsTable: React.FC<TransactionTableType> = ({
+export const TransactionTable: React.FC<TransactionTableType> = ({
     transactions,
     sortOrder,
     onSortOrderChange,
