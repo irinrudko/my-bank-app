@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Transaction, User } from '../../types/types'
-import styles from './TransactionHistory.module.scss'
+import styles from './TransactionsHistory.module.scss'
 
 type TransactionHistoryType = {
     transactions: Transaction[]
@@ -10,7 +10,7 @@ type TransactionHistoryType = {
 type SortOrderType = 'asc' | 'desc'
 type TransactionType = 'incoming' | 'outgoing'
 
-export const TransactionHistory: React.FC<TransactionHistoryType> = ({ transactions, selectedUser }) => {
+export const TransactionsHistory: React.FC<TransactionHistoryType> = ({ transactions, selectedUser }) => {
     const [incomingSortOrder, setIncomingSortOrder] = useState<SortOrderType>('asc')
     const [outgoingSortOrder, setOutgoingSortOrder] = useState<SortOrderType>('asc')
 

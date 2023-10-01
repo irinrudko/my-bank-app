@@ -3,7 +3,7 @@ import { fetchUsersAndTransactions } from '../data/api'
 import { User, Transaction } from '../types/types'
 import { BalanceDisplay } from './BalanceDisplay'
 import { UserSelection } from './UserSelection'
-import { TransactionHistory } from './TransactionHistory/TransactionHistory'
+import { TransactionsHistory } from './TransactionsHistory/TransactionsHistory'
 
 export const UserAccount = () => {
     const [users, setUsers] = useState<User[]>([])
@@ -27,7 +27,7 @@ export const UserAccount = () => {
             <h1>Bank Transaction History</h1>
             <UserSelection users={users} setSelectedUser={setSelectedUser} />
             <BalanceDisplay user={selectedUser} transactions={transactions} />
-            <TransactionHistory transactions={transactions} selectedUser={selectedUser} />
+            <TransactionsHistory transactions={transactions} selectedUser={selectedUser} />
         </div>
     )
 }
