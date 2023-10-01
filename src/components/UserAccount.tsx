@@ -26,8 +26,13 @@ export const UserAccount = () => {
         <div>
             <h1>Bank Transaction History</h1>
             <UserSelection users={users} setSelectedUser={setSelectedUser} />
-            <BalanceDisplay user={selectedUser} transactions={transactions} />
-            <TransactionsHistory transactions={transactions} selectedUser={selectedUser} />
+
+            {selectedUser && (
+                <>
+                    <BalanceDisplay user={selectedUser} transactions={transactions} />
+                    <TransactionsHistory transactions={transactions} selectedUser={selectedUser} />
+                </>
+            )}
         </div>
     )
 }
