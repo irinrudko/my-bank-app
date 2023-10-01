@@ -1,14 +1,13 @@
 import { useState, useEffect } from 'react'
 import { fetchUsersAndTransactions } from '../../data/api'
 import { User, Transaction } from '../../types/types'
-import { BalanceDisplay } from '../BalanceDisplay'
 import { UserSelection } from '../UserSelection/UserSelection'
-import { UserTransactions } from '../UserTransactions/UserTransactions'
+import { Route, Routes } from 'react-router-dom'
+import UserDetail from '../UserDetail/UserDetail'
 
 export const UserAccount = () => {
     const [users, setUsers] = useState<User[]>([])
     const [transactions, setTransactions] = useState<Transaction[]>([])
-    const [selectedUser, setSelectedUser] = useState<User | null>(null)
 
     useEffect(() => {
         async function loadData() {
@@ -25,14 +24,11 @@ export const UserAccount = () => {
     return (
         <div>
             <h1>Bank Transaction History</h1>
-            <UserSelection users={users} setSelectedUser={setSelectedUser} />
+            <UserSelection users={users} />
 
-            {selectedUser && (
-                <>
-                    <BalanceDisplay user={selectedUser} transactions={transactions} />
-                    <UserTransactions transactions={transactions} selectedUser={selectedUser} />
-                </>
-            )}
+            <Routes>
+                <Route path="/user/:userId" element={<UserDetail users={users} transactions={transactions} />} />
+            </Routes>
         </div>
     )
 }
