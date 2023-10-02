@@ -1,12 +1,12 @@
 import { Transaction } from '../../../../types/types'
 import common from '../../../../styles/common.module.scss'
 
-type SortOrderType = 'asc' | 'desc'
+export type SortOrderType = 'ascending' | 'descending'
 
 type TransactionTableType = {
     transactions: Transaction[]
     sortOrder: SortOrderType
-    onSortOrderChange: any
+    onSortOrderChange: () => void
     type: string
 }
 
@@ -17,8 +17,12 @@ export const TransactionTable: React.FC<TransactionTableType> = ({
     type,
 }) => {
     const sortedTransactions = [...transactions].sort((a, b) =>
-        sortOrder === 'asc' ? a.amount - b.amount : b.amount - a.amount
+        sortOrder === 'ascending' ? a.amount - b.amount : b.amount - a.amount
     )
+
+    if (sortedTransactions.length === 0) {
+        return <p>No transactions</p>
+    }
 
     return (
         <table className={common.table}>
@@ -26,13 +30,13 @@ export const TransactionTable: React.FC<TransactionTableType> = ({
                 <tr>
                     <th>{type === 'incoming' ? 'Source ID' : 'Target ID'}</th>
                     <th onClick={onSortOrderChange} className={`${common.sortableHeader} ${common.sortIcon}`}>
-                        Amount {sortOrder === 'asc' ? '▲' : '▼'}
+                        Amount {sortOrder === 'ascending' ? '▲' : '▼'}
                     </th>
                 </tr>
             </thead>
             <tbody>
                 {sortedTransactions.map((transaction, index) => (
-                    <tr key={index}>
+                    <tr key={index} data-testid="transaction-row">
                         <td>{type === 'incoming' ? transaction.sourceId : transaction.targetId}</td>
                         <td>{transaction.amount.toFixed(2)}</td>
                     </tr>

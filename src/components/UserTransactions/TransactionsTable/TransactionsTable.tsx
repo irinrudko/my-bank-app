@@ -1,6 +1,6 @@
 import { useState } from 'react'
 import { Transaction, User } from '../../../types/types'
-import { TransactionTable } from './TransactionTable/TransactionTable'
+import { SortOrderType, TransactionTable } from './TransactionTable/TransactionTable'
 import common from '../../../styles/common.module.scss'
 import { Pagination } from '../../Pagination/Pagination'
 
@@ -10,21 +10,20 @@ type TransactionsTableType = {
 }
 
 type TransactionType = 'incoming' | 'outgoing'
-type SortOrderType = 'asc' | 'desc'
 
 export const TransactionsTable: React.FC<TransactionsTableType> = ({ transactions, selectedUser }) => {
-    const [incomingSortOrder, setIncomingSortOrder] = useState<SortOrderType>('asc')
-    const [outgoingSortOrder, setOutgoingSortOrder] = useState<SortOrderType>('asc')
+    const [incomingSortOrder, setIncomingSortOrder] = useState<SortOrderType>('ascending')
+    const [outgoingSortOrder, setOutgoingSortOrder] = useState<SortOrderType>('descending')
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [itemsPerPage] = useState<number>(20)
 
     const toggleSortOrder = (column: TransactionType) => {
         switch (column) {
             case 'incoming':
-                setIncomingSortOrder(incomingSortOrder === 'asc' ? 'desc' : 'asc')
+                setIncomingSortOrder(incomingSortOrder === 'ascending' ? 'descending' : 'ascending')
                 break
             case 'outgoing':
-                setOutgoingSortOrder(outgoingSortOrder === 'asc' ? 'desc' : 'asc')
+                setOutgoingSortOrder(outgoingSortOrder === 'ascending' ? 'descending' : 'ascending')
                 break
             default:
                 break
@@ -47,7 +46,7 @@ export const TransactionsTable: React.FC<TransactionsTableType> = ({ transaction
 
         return filteredTransactions.sort((a, b) => {
             const compareAmount = a.amount - b.amount
-            return sortOrder === 'asc' ? compareAmount : -compareAmount
+            return sortOrder === 'ascending' ? compareAmount : -compareAmount
         })
     }
 
