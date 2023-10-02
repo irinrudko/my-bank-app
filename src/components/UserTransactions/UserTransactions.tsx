@@ -16,7 +16,11 @@ export const UserTransactions: React.FC<UserTransactionsType> = ({ transactions,
             <h2>Account Overview</h2>
 
             <Search value={search} onChange={handleSearch} />
-            <TransactionsTable transactions={filteredTransactions} selectedUser={selectedUser} />
+            {filteredTransactions.length === 0 ? (
+                <p>No transactions with such id found</p>
+            ) : (
+                <TransactionsTable transactions={filteredTransactions} selectedUser={selectedUser} />
+            )}
         </div>
     )
 }
