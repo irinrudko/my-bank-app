@@ -56,15 +56,12 @@ export const TransactionsTable: React.FC<TransactionsTableType> = ({ transaction
         return sortedTransactions
     }
 
-    //pagination
-    const filteredIncomingTransactions = transactions.filter((transaction) => transaction.targetId === selectedUser?.id)
-    const filteredOutgoingTransactions = transactions.filter((transaction) => transaction.sourceId === selectedUser?.id)
-
-    const totalItems = Math.max(filteredIncomingTransactions.length, filteredOutgoingTransactions.length)
+    // pagination
+    const totalItems = transactions.length
     const totalPages = Math.ceil(totalItems / itemsPerPage)
 
     const startIndex = (currentPage - 1) * itemsPerPage
-    const endIndex = startIndex + itemsPerPage
+    const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
 
     const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1)
 
@@ -81,7 +78,7 @@ export const TransactionsTable: React.FC<TransactionsTableType> = ({ transaction
         endPage = Math.min(totalPages, startPage + 9)
         startPage = Math.max(1, endPage - 9)
     }
-    //pagination
+    // pagination
 
     return (
         <div>
