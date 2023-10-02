@@ -1,4 +1,4 @@
-import { render, screen } from '@testing-library/react'
+import { render, screen, fireEvent } from '@testing-library/react'
 import { TransactionsTable } from './TransactionsTable'
 
 const mockUsers = [
@@ -66,5 +66,41 @@ describe('TransactionsTable Component', () => {
         expect(screen.getByText('1')).toBeInTheDocument() // Assuming initial currentPage is 1
         expect(screen.getByText('Next')).toBeInTheDocument()
         expect(screen.getByText('Last Page')).toBeInTheDocument()
+    })
+
+    it('allows sorting by incoming transactions', () => {
+        render(<TransactionsTable transactions={mockTransactions} selectedUser={mockUsers[0]} />)
+
+        const incomingHeader = screen.getByText('Incoming Transactions')
+
+        fireEvent.click(incomingHeader)
+
+        const sortedTransactions = [...mockTransactions].sort((a, b) => a.amount - b.amount)
+
+        const transactionRows = screen.getAllByTestId('transaction-row')
+
+        expect(transactionRows[0]).toHaveTextContent(sortedTransactions[0].sourceId)
+        expect(transactionRows[0]).toHaveTextContent(sortedTransactions[0].amount.toString())
+
+        expect(transactionRows[1]).toHaveTextContent(sortedTransactions[1].sourceId)
+        expect(transactionRows[1]).toHaveTextContent(sortedTransactions[1].amount.toString())
+    })
+
+    it('allows sorting by outgoing transactions', () => {
+        render(<TransactionsTable transactions={mockTransactions} selectedUser={mockUsers[0]} />)
+
+        const outgoingHeader = screen.getByText('Outgoing Transactions')
+
+        fireEvent.click(outgoingHeader)
+
+        const sortedTransactions = [...mockTransactions].sort((a, b) => a.amount - b.amount)
+
+        const transactionRows = screen.getAllByTestId('transaction-row')
+
+        expect(transactionRows[0]).toHaveTextContent(sortedTransactions[0].sourceId)
+        expect(transactionRows[0]).toHaveTextContent(sortedTransactions[0].amount.toString())
+
+        expect(transactionRows[1]).toHaveTextContent(sortedTransactions[1].sourceId)
+        expect(transactionRows[1]).toHaveTextContent(sortedTransactions[1].amount.toString())
     })
 })
