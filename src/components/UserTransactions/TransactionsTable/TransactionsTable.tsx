@@ -32,32 +32,29 @@ export const TransactionsTable: React.FC<TransactionsTableType> = ({ transaction
     }
 
     const sortTransactions = (column: TransactionType): Transaction[] => {
-        const sortedTransactions = [...transactions]
-
-        switch (column) {
-            case 'incoming':
-                if (incomingSortOrder === 'asc') {
-                    sortedTransactions.sort((a, b) => a.amount - b.amount)
-                } else {
-                    sortedTransactions.sort((a, b) => b.amount - a.amount)
+        const filteredTransactions = transactions.filter((transaction) => {
+            switch (column) {
+                case 'incoming': {
+                    return transaction.targetId === selectedUser?.id
                 }
-                break
-            case 'outgoing':
-                if (outgoingSortOrder === 'asc') {
-                    sortedTransactions.sort((a, b) => a.amount - b.amount)
-                } else {
-                    sortedTransactions.sort((a, b) => b.amount - a.amount)
+                case 'outgoing': {
+                    return transaction.sourceId === selectedUser?.id
                 }
-                break
-            default:
-                break
-        }
+            }
+        })
 
-        return sortedTransactions
+        const sortOrder = column === 'incoming' ? incomingSortOrder : outgoingSortOrder
+
+        return filteredTransactions.sort((a, b) => {
+            const compareAmount = a.amount - b.amount
+            return sortOrder === 'asc' ? compareAmount : -compareAmount
+        })
     }
 
     // pagination
-    const totalItems = transactions.length
+    const totalItemsIncoming = transactions.filter((transaction) => transaction.targetId === selectedUser?.id).length
+    const totalItemsOutgoing = transactions.filter((transaction) => transaction.sourceId === selectedUser?.id).length
+    const totalItems = Math.max(totalItemsIncoming, totalItemsOutgoing)
     const totalPages = Math.ceil(totalItems / itemsPerPage)
 
     const startIndex = (currentPage - 1) * itemsPerPage
