@@ -7,7 +7,7 @@ import UserDetail from '../UserDetail/UserDetail'
 
 export const UserAccount = () => {
     const [users, setUsers] = useState<User[]>([])
-    const [transactions, setTransactions] = useState<Transaction[]>([])
+    const [allTransactions, setAllTransactions] = useState<Transaction[]>([])
     const [selectedUserId, setSelectedUserId] = useState<string>('')
 
     useEffect(() => {
@@ -15,7 +15,7 @@ export const UserAccount = () => {
             try {
                 const data = await fetchUsersAndTransactions()
                 setUsers(data.users)
-                setTransactions(data.transactions)
+                setAllTransactions(data.transactions)
             } catch (error) {}
         }
 
@@ -26,6 +26,10 @@ export const UserAccount = () => {
         setSelectedUserId(userId)
     }
 
+    const userTransactions = allTransactions.filter(
+        (transaction) => transaction.sourceId === selectedUserId || transaction.targetId === selectedUserId
+    )
+
     return (
         <div>
             <h1>Bank Transaction History</h1>
@@ -34,7 +38,7 @@ export const UserAccount = () => {
             <Routes>
                 <Route
                     path="/user/:userId"
-                    element={<UserDetail users={users} transactions={transactions} onUserIdChange={setUserId} />}
+                    element={<UserDetail users={users} transactions={userTransactions} onUserIdChange={setUserId} />}
                 />
             </Routes>
         </div>
