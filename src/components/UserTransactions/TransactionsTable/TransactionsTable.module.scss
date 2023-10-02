@@ -1,1 +1,27 @@
+@use '../../../styles/colors.scss' as colors;
 
+.pagination {
+    margin-top: 20px;
+    text-align: center;
+
+    .button {
+        padding: 8px 12px;
+        margin: 0 4px;
+        background-color: colors.$primary-color-bright;
+        color: #fff;
+        border: none;
+        cursor: pointer;
+        border-radius: 4px;
+        font-weight: bold;
+        transition: background-color 0.4s ease, transform 0.2s ease;
+    }
+
+    button.active {
+        background-color: #555;
+    }
+
+    button:disabled {
+        background-color: #ccc;
+        cursor: not-allowed;
+    }
+}
