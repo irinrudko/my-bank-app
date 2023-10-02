@@ -1,5 +1,6 @@
 import { render, screen, fireEvent } from '@testing-library/react'
 import { TransactionsTable } from './TransactionsTable'
+import { MemoryRouter } from 'react-router-dom'
 
 const mockUsers = [
     {
@@ -54,14 +55,21 @@ const mockTransactions = [
 
 describe('TransactionsTable Component', () => {
     it('renders the table with the correct headers', () => {
-        render(<TransactionsTable transactions={[]} selectedUser={null} />)
-
+        render(
+            <MemoryRouter>
+                <TransactionsTable transactions={[]} selectedUser={null} />
+            </MemoryRouter>
+        )
         expect(screen.getByText('Incoming Transactions')).toBeInTheDocument()
         expect(screen.getByText('Outgoing Transactions')).toBeInTheDocument()
     })
 
     it('displays pagination', () => {
-        render(<TransactionsTable transactions={mockTransactions} selectedUser={mockUsers[0]} />)
+        render(
+            <MemoryRouter>
+                <TransactionsTable transactions={mockTransactions} selectedUser={mockUsers[0]} />
+            </MemoryRouter>
+        )
 
         expect(screen.getByText('1')).toBeInTheDocument() // Assuming initial currentPage is 1
         expect(screen.getByText('Next')).toBeInTheDocument()
@@ -69,7 +77,11 @@ describe('TransactionsTable Component', () => {
     })
 
     it('allows sorting by incoming transactions', () => {
-        render(<TransactionsTable transactions={mockTransactions} selectedUser={mockUsers[0]} />)
+        render(
+            <MemoryRouter>
+                <TransactionsTable transactions={mockTransactions} selectedUser={mockUsers[0]} />
+            </MemoryRouter>
+        )
 
         const incomingHeader = screen.getByText('Incoming Transactions')
 
@@ -87,7 +99,11 @@ describe('TransactionsTable Component', () => {
     })
 
     it('allows sorting by outgoing transactions', () => {
-        render(<TransactionsTable transactions={mockTransactions} selectedUser={mockUsers[0]} />)
+        render(
+            <MemoryRouter>
+                <TransactionsTable transactions={mockTransactions} selectedUser={mockUsers[0]} />
+            </MemoryRouter>
+        )
 
         const outgoingHeader = screen.getByText('Outgoing Transactions')
 
