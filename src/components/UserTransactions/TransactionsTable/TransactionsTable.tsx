@@ -1,8 +1,9 @@
-import { useState } from 'react'
+import { useEffect, useState } from 'react'
+import { useLocation, useNavigate, useParams } from 'react-router-dom'
 import { Transaction, User } from '../../../types/types'
 import { SortOrderType, TransactionTable } from './TransactionTable/TransactionTable'
-import common from '../../../styles/common.module.scss'
 import { Pagination } from '../../Pagination/Pagination'
+import common from '../../../styles/common.module.scss'
 
 type TransactionsTableType = {
     transactions: Transaction[]
@@ -16,6 +17,25 @@ export const TransactionsTable: React.FC<TransactionsTableType> = ({ transaction
     const [outgoingSortOrder, setOutgoingSortOrder] = useState<SortOrderType>('descending')
     const [currentPage, setCurrentPage] = useState<number>(1)
     const [itemsPerPage] = useState<number>(20)
+
+    const { userId } = useParams()
+    const location = useLocation()
+    const navigate = useNavigate()
+
+    useEffect(() => {
+        // mount with page number from url
+        const searchParams = new URLSearchParams(location.search)
+        const page = searchParams.get('page')
+
+        page && setCurrentPage(Number(page))
+    }, [location.search])
+
+    const setPageToUrl = (pageNumber: number) => {
+        const searchParams = new URLSearchParams(location.search)
+
+        searchParams.set('page', pageNumber.toString())
+        navigate(`/user/${userId}?${searchParams.toString()}`)
+    }
 
     const toggleSortOrder = (column: TransactionType) => {
         switch (column) {
@@ -94,7 +114,10 @@ export const TransactionsTable: React.FC<TransactionsTableType> = ({ transaction
                 totalItems={totalTransactions}
                 itemsPerPage={itemsPerPage}
                 currentPage={currentPage}
-                onPageChange={setCurrentPage}
+                onPageChange={(page) => {
+                    setPageToUrl(page)
+                    setCurrentPage(page)
+                }}
             />
         </div>
     )
