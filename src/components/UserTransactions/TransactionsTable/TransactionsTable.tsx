@@ -2,7 +2,7 @@ import { useState } from 'react'
 import { Transaction, User } from '../../../types/types'
 import { TransactionTable } from './TransactionTable/TransactionTable'
 import common from '../../../styles/common.module.scss'
-import styles from './TransactionsTable.module.scss'
+import { Pagination } from '../../Pagination/Pagination'
 
 type TransactionsTableType = {
     transactions: Transaction[]
@@ -52,29 +52,12 @@ export const TransactionsTable: React.FC<TransactionsTableType> = ({ transaction
     }
 
     // pagination
-    const totalItemsIncoming = transactions.filter((transaction) => transaction.targetId === selectedUser?.id).length
-    const totalItemsOutgoing = transactions.filter((transaction) => transaction.sourceId === selectedUser?.id).length
-    const totalItems = Math.max(totalItemsIncoming, totalItemsOutgoing)
-    const totalPages = Math.ceil(totalItems / itemsPerPage)
+    const incomingTransactions = transactions.filter((t) => t.targetId === selectedUser?.id).length
+    const outgoingTransactions = transactions.filter((t) => t.sourceId === selectedUser?.id).length
+    const totalTransactions = Math.max(incomingTransactions, outgoingTransactions)
 
     const startIndex = (currentPage - 1) * itemsPerPage
-    const endIndex = Math.min(startIndex + itemsPerPage, totalItems)
-
-    const pageNumbers = Array.from({ length: totalPages }, (_, i) => i + 1)
-
-    const goToPage = (page: number) => {
-        if (page >= 1 && page <= totalPages) {
-            setCurrentPage(page)
-        }
-    }
-
-    let startPage = Math.max(1, currentPage - 4)
-    let endPage = Math.min(startPage + 9, totalPages)
-
-    if (endPage - startPage < 9) {
-        endPage = Math.min(totalPages, startPage + 9)
-        startPage = Math.max(1, endPage - 9)
-    }
+    const endIndex = Math.min(startIndex + itemsPerPage, totalTransactions)
     // pagination
 
     return (
@@ -108,43 +91,12 @@ export const TransactionsTable: React.FC<TransactionsTableType> = ({ transaction
                     </tr>
                 </tbody>
             </table>
-            {/* Pagination */}
-            <div className={styles.pagination}>
-                <button className={styles.button} onClick={() => goToPage(1)} disabled={currentPage === 1}>
-                    First Page
-                </button>
-                <button
-                    className={styles.button}
-                    onClick={() => goToPage(currentPage - 1)}
-                    disabled={currentPage === 1}
-                >
-                    Previous
-                </button>
-                {pageNumbers.slice(startPage - 1, endPage).map((pageNumber) => (
-                    <button
-                        key={pageNumber}
-                        onClick={() => goToPage(pageNumber)}
-                        className={`${styles.button} ${pageNumber === currentPage ? 'active' : ''}`}
-                        disabled={pageNumber === currentPage}
-                    >
-                        {pageNumber}
-                    </button>
-                ))}
-                <button
-                    className={styles.button}
-                    onClick={() => goToPage(currentPage + 1)}
-                    disabled={currentPage === totalPages}
-                >
-                    Next
-                </button>
-                <button
-                    className={styles.button}
-                    onClick={() => goToPage(totalPages)}
-                    disabled={currentPage === totalPages}
-                >
-                    Last Page
-                </button>
-            </div>
+            <Pagination
+                totalItems={totalTransactions}
+                itemsPerPage={itemsPerPage}
+                currentPage={currentPage}
+                onPageChange={setCurrentPage}
+            />
         </div>
     )
 }
