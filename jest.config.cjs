@@ -6,4 +6,5 @@ module.exports = {
     transform: {
         '^.+\\.scss$': 'jest-scss-transform',
     },
+    setupFilesAfterEnv: ['./jest-setup.ts'],
 }
