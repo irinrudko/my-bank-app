@@ -22,9 +22,11 @@ const UserDetail: React.FC<UserDetailProps> = ({ users, transactions, onUserIdCh
     }, [userId, users])
 
     return (
-        <div>
+        <div data-testid="user-detail">
             {selectedUser && (
                 <>
+                    <h2 data-testid="selected-user">Selected User: {selectedUser.name}</h2>
+
                     <BalanceDisplay user={selectedUser} transactions={transactions} />
                     <UserTransactions transactions={transactions} selectedUser={selectedUser} />
                 </>

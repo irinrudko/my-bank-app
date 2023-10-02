@@ -26,7 +26,6 @@ export const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ user, transactio
 
     return (
         <div>
-            <h2>Selected User: {user?.name}</h2>
             <p>Balance: {userBalance.toFixed(2)}</p>
         </div>
     )
