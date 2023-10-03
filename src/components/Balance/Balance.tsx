@@ -24,7 +24,7 @@ export const Balance: React.FC<BalanceType> = React.memo(({ user, transactions }
         return balance
     }
 
-    const userBalance = useMemo(calculateUserBalance, [calculateUserBalance])
+    const userBalance = useMemo(() => calculateUserBalance(), [calculateUserBalance])
 
     return (
         <div className={styles.balance}>
