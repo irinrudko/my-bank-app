@@ -19,7 +19,7 @@ const UserDetail: React.FC<UserDetailProps> = ({ users, transactions, onUserIdCh
         setSelectedUser(user || null)
 
         onUserIdChange(userId!)
-    }, [userId, users])
+    }, [userId, users, onUserIdChange])
 
     return (
         <div data-testid="user-detail">
