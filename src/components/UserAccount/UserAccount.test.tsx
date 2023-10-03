@@ -65,7 +65,8 @@ const mockData = {
 
 describe('UserAccount Component', () => {
     beforeAll(() => {
-        ;(api.fetchUsersAndTransactions as jest.Mock).mockResolvedValue(mockData)
+        // prettier-ignore
+        (api.fetchUsersAndTransactions as jest.Mock).mockResolvedValue(mockData)
     })
 
     it('renders the component and loads data', async () => {
