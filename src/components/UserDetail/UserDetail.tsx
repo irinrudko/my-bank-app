@@ -1,7 +1,7 @@
 import { useEffect, useState } from 'react'
 import { useParams } from 'react-router-dom'
 import { User, Transaction } from '../../types/types'
-import { BalanceDisplay } from '../BalanceDisplay'
+import { Balance } from '../Balance/Balance'
 import { UserTransactions } from '../UserTransactions/UserTransactions'
 
 type UserDetailProps = {
@@ -27,7 +27,7 @@ const UserDetail: React.FC<UserDetailProps> = ({ users, transactions, onUserIdCh
                 <>
                     <h2 data-testid="selected-user">Selected User: {selectedUser.name}</h2>
 
-                    <BalanceDisplay user={selectedUser} transactions={transactions} />
+                    <Balance user={selectedUser} transactions={transactions} />
                     <UserTransactions transactions={transactions} selectedUser={selectedUser} />
                 </>
             )}
