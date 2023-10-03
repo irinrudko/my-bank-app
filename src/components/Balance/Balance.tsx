@@ -1,4 +1,4 @@
-import React, { useMemo } from 'react'
+import { memo, useMemo } from 'react'
 import { Transaction, User } from '../../types/types'
 import styles from './Balance.module.scss'
 
@@ -7,7 +7,7 @@ type BalanceType = {
     transactions: Transaction[]
 }
 
-export const Balance: React.FC<BalanceType> = React.memo(({ user, transactions }) => {
+export const Balance: React.FC<BalanceType> = memo(({ user, transactions }) => {
     const calculateUserBalance = () => {
         if (!user) return 0
 
