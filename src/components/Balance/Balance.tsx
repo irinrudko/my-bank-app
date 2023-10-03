@@ -1,11 +1,12 @@
-import { Transaction, User } from '../types/types'
+import { Transaction, User } from '../../types/types'
+import styles from './Balance.module.scss'
 
-type BalanceDisplayProps = {
+type BalanceType = {
     user: User | null
     transactions: Transaction[]
 }
 
-export const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ user, transactions }) => {
+export const Balance: React.FC<BalanceType> = ({ user, transactions }) => {
     const calculateUserBalance = () => {
         if (!user) return 0
 
@@ -25,7 +26,7 @@ export const BalanceDisplay: React.FC<BalanceDisplayProps> = ({ user, transactio
     const userBalance = calculateUserBalance()
 
     return (
-        <div>
+        <div className={styles.balance}>
             <p>Balance: {userBalance.toFixed(2)}</p>
         </div>
     )
